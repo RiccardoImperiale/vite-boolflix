@@ -17,7 +17,9 @@ export default {
             <ul v-for="movie in store.results" :key="movie.id">
                 <li>{{ movie.title }}</li>
                 <li>{{ movie.original_title }}</li>
-                <li>{{ movie.original_language }}</li>
+                <li>
+                    <img width="30px" :src="'/img/flags4x3/' + movie.original_language + '.svg'" alt="country flag">
+                </li>
                 <li>{{ movie.vote_average }}</li>
             </ul>
         </template>
