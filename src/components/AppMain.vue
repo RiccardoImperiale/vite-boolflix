@@ -19,27 +19,120 @@ export default {
 </script>
 
 <template>
-    <main>
+    <main class="container">
         <!-- movies -->
         <div v-if="store.results.length > 0" class="movies">
             <div v-for="movie in store.results" :key="movie.id" class="card">
-                <h3>{{ movie.title }}</h3>
-                <h4>{{ movie.origTitle }}</h4>
-                <img v-if="countryCodes.includes(movie.language)" width="30px"
-                    :src="'/img/flags4x3/' + movie.language + '.svg'" alt="country flag">
-                <h4 v-else>{{ movie.language }}</h4>
-                <!-- rating -->
-                <div class="rating">
-                    <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar" class="fa-solid fa-star"></i>
-                    <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
-                        class="fa-regular fa-star"></i>
+                <div class="image">
+                    <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w300/' + movie.image" alt="movie poster">
+                    <div v-else class="no_image">{{ movie.title }}</div>
                 </div>
-                <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w342/' + movie.image" alt="movie poster">
-                <div v-else>no image</div>
+                <div class="info">
+                    <div class="top">
+                        <div class="title">
+                            <h4>Title: </h4><span>{{ movie.title }}</span>
+                        </div>
+                        <div class="original_title">
+                            <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
+                        </div>
+                        <!-- rating -->
+                        <div class="rating">
+                            <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
+                                class="fa-solid fa-star"></i>
+                            <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
+                                class="fa-regular fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <img v-if="countryCodes.includes(movie.language)"
+                            :src="'/img/flags4x3/' + movie.language + '.svg'" alt="country flag">
+                        <h4 v-else>{{ movie.language }}</h4>
+                    </div>
+                </div>
             </div>
             <hr>
         </div>
     </main>
 </template>
 
-<style></style>
+<style>
+main {
+    color: white;
+    padding: 2rem 0;
+
+    .movies {
+        display: flex;
+        flex-wrap: wrap;
+
+        .card {
+            width: calc(100% / 4);
+            position: relative;
+
+            .image {
+                height: 100%;
+
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .no_image {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 4px solid var(--bflix-dark);
+                }
+            }
+
+            .info {
+                position: absolute;
+                background-color: var(--bflix-darker);
+                z-index: 1;
+                inset: 0;
+                opacity: 0;
+                transition: opacity .5s ease;
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .card:hover & {
+                    opacity: .8;
+                }
+
+                .top {
+                    & h4 {
+                        display: inline;
+                    }
+
+                    .rating {
+                        padding-top: 1rem;
+
+                        .fa-solid {
+                            color: rgb(255, 170, 0);
+                        }
+                    }
+                }
+
+                .bottom {
+                    background-color: aqua;
+                    border-radius: 50%;
+                    width: 30px;
+                    height: 30px;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    & img {
+                        height: 100%;
+                    }
+
+                }
+            }
+        }
+    }
+}
+</style>

@@ -1,5 +1,22 @@
+:root {
+  --bflix-darker: #0d0d0d;
+  --bflix-dark: #141414;
+  --bflix-light: white;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bflix-darker);
+  font-family: "Open Sans", sans-serif;
+}
+
+.container {
+  max-width: 1920px;
+  width: 90%;
+  margin: auto;
 }

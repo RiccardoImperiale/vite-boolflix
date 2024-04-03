@@ -13,10 +13,12 @@ export const store = reactive({
     getMovies() {
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`)
             .then(res => {
+                console.log(res.data)
                 res.data.results.forEach(movie => {
                     this.results.push({
                         id: movie.id,
-                        category: 'movie',
+                        // category: 'movie',
+                        genre_id: movie.genre_id,
                         title: movie.title,
                         language: movie.original_language,
                         origTitle: movie.original_title,
@@ -33,7 +35,8 @@ export const store = reactive({
                 res.data.results.forEach(tv => {
                     this.results.push({
                         id: tv.id,
-                        category: 'series',
+                        // category: 'series',
+                        genre_id: tv.genre_id,
                         title: tv.name,
                         language: tv.original_language,
                         origTitle: null,
