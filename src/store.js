@@ -14,3 +14,4 @@ export const store = reactive({
             }).catch(err => console.error(err.message));
     },
 })
+
