@@ -37,10 +37,18 @@ export default {
                         </div>
                         <!-- rating -->
                         <div class="rating">
-                            <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
-                                class="fa-solid fa-star"></i>
-                            <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
-                                class="fa-regular fa-star"></i>
+                            <h4>Rating: </h4>
+                            <div class="stars">
+                                <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
+                                    class="fa-solid fa-star"></i>
+                                <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
+                                    class="fa-regular fa-star"></i>
+                            </div>
+                        </div>
+                        <!-- overview -->
+                        <div v-if="movie.overview" class="overview">
+                            <h4>Overview: </h4>
+                            <span>{{ movie.overview }}</span>
                         </div>
                     </div>
                     <div class="bottom">
@@ -63,9 +71,10 @@ main {
     .movies {
         display: flex;
         flex-wrap: wrap;
+        gap: .25rem;
 
         .card {
-            width: calc(100% / 4);
+            width: calc(100% / 5 - 0.25rem);
             position: relative;
 
             .image {
@@ -99,7 +108,7 @@ main {
                 justify-content: space-between;
 
                 .card:hover & {
-                    opacity: .8;
+                    opacity: .85;
                 }
 
                 .top {
@@ -107,17 +116,30 @@ main {
                         display: inline;
                     }
 
+                    .original_title {
+                        padding-top: .5rem;
+
+                    }
+
                     .rating {
-                        padding-top: 1rem;
+                        padding-top: .5rem;
+                        display: flex;
+                        gap: .5rem;
 
                         .fa-solid {
                             color: var(--bflix-warning);
                         }
                     }
+
+                    .overview {
+                        padding-top: .5rem;
+                        height: 100px;
+                        overflow-y: hidden;
+                        text-overflow: ellipsis;
+                    }
                 }
 
                 .bottom {
-                    background-color: aqua;
                     border-radius: 50%;
                     width: 30px;
                     height: 30px;
@@ -133,6 +155,60 @@ main {
                 }
             }
         }
+    }
+}
+
+@media screen and (min-width: 1530px) {
+    main {
+        .movies {
+
+            .card {
+                background-color: blueviolet;
+                width: calc(100% / 6 - 0.25rem);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    main {
+        .movies {
+
+            .card {
+                background-color: blueviolet;
+                width: calc(100% / 5 - 0.25rem);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    main {
+        .movies {
+            .card {
+                background-color: blueviolet;
+                width: calc(100% / 4 - 0.25rem);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 970px) {
+    main .movies .card {
+        background-color: blueviolet;
+        width: calc(100% / 3 - 0.25rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main .movies .card {
+        width: calc(100% / 2 - 0.25rem);
+    }
+}
+
+@media screen and (max-width: 525px) {
+    main .movies .card {
+        width: calc(100% / 1 - 0.25rem);
     }
 }
 </style>

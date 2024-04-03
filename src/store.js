@@ -18,8 +18,9 @@ export const store = reactive({
                     this.results.push({
                         id: movie.id,
                         // category: 'movie',
-                        genre_id: movie.genre_id,
+                        genre_ids: movie.genre_id,
                         title: movie.title,
+                        overview: movie.overview,
                         language: movie.original_language,
                         origTitle: movie.original_title,
                         vote: movie.vote_average,
@@ -36,8 +37,9 @@ export const store = reactive({
                     this.results.push({
                         id: tv.id,
                         // category: 'series',
-                        genre_id: tv.genre_id,
+                        genre_ids: tv.genre_id,
                         title: tv.name,
+                        overview: tv.overview,
                         language: tv.original_language,
                         origTitle: null,
                         vote: tv.vote_average,

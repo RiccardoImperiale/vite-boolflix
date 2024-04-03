@@ -35,7 +35,7 @@ header {
     color: var(--bflix-light);
 
     & nav {
-        padding: 1.5rem 0;
+        padding: 1rem 0;
         display: flex;
         align-items: center;
 
@@ -63,7 +63,57 @@ header {
             justify-content: end;
 
             & input {
-                width: 250px;
+                max-width: 250px;
+                width: 300px;
+                background-color: transparent;
+                border: none;
+                outline: none;
+                border-bottom: 1px solid var(--bflix-light);
+                color: var(--bflix-light);
+                padding: 1rem 0;
+                font-size: 1rem;
+            }
+
+            & i {
+                font-size: 1.2rem;
+                cursor: pointer;
+                position: absolute;
+            }
+        }
+
+    }
+}
+
+/* media queries --------------------------------_>  */
+
+@media screen and (max-width: 768px) {
+    header nav {
+        position: relative;
+
+        padding: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .left {
+            display: flex;
+            align-items: center;
+
+            & img {
+                width: 140px;
+                margin-right: 3rem;
+            }
+
+            .links {
+                display: none;
+            }
+        }
+
+        .right {
+            width: 100%;
+
+            & input {
+                width: 100%;
                 background-color: transparent;
                 border: none;
                 outline: none;
