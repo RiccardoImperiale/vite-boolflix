@@ -15,7 +15,7 @@ export const store = reactive({
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`)
             .then(res => {
                 this.moviesResults = res.data.results;
-                console.log(this.results);
+                console.log(this.moviesResults);
             }).catch(err => console.error(err.message));
     },
     getTvSeries() {

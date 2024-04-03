@@ -22,3 +22,9 @@ gestendo il caso in cui non abbiamo la bandiera della nazione ritornata dall’A
 dovremo prendere sia i film che corrispondono alla query, sia le serie tv, stando
 attenti ad avere alla fine dei valori simili (le serie e i film hanno campi nel JSON di
 risposta diversi, simili ma non sempre identici)
+
+## Milestone 3:
+In questa milestone come prima cosa aggiungiamo la copertina del film o della serie
+al nostro elenco. Ci viene passata dall’API solo la parte finale dell’URL, questo
+perché poi potremo generare da quella porzione di URL tante dimensioni diverse.
+Dovremo prendere quindi l’URL base delle immagini di TMDB:

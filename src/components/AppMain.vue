@@ -17,29 +17,28 @@ export default {
     <main>
         <!-- movies -->
         <div v-if="store.moviesResults.length > 0" class="movies">
-            <ul v-for="movie in store.moviesResults" :key="movie.id">
-                <li>{{ movie.title }}</li>
-                <li>{{ movie.original_title }}</li>
-                <li>
-                    <img v-if="countryCodes.includes(movie.original_language)" width="30px"
-                        :src="'/img/flags4x3/' + movie.original_language + '.svg'" alt="country flag">
-                    <span v-else>{{ movie.original_language }}</span>
-                </li>
-                <li>{{ movie.vote_average }}</li>
-            </ul>
+            <div v-for="movie in store.moviesResults" :key="movie.id" class="card">
+                <h3>{{ movie.title }}</h3>
+                <h4>{{ movie.original_title }}</h4>
+                <img v-if="countryCodes.includes(movie.original_language)" width="30px"
+                    :src="'/img/flags4x3/' + movie.original_language + '.svg'" alt="country flag">
+                <h6 v-else>{{ movie.original_language }}</h6>
+                <h5>{{ movie.vote_average }}</h5>
+                <img :src="'https://image.tmdb.org/t/p/w342/' + movie.backdrop_path" alt="movie poster">
+            </div>
+            <hr>
         </div>
         <!-- tv series -->
         <div v-if="store.seriesResults.length > 0" class="series">
-            <ul v-for="serie in store.seriesResults" :key="serie.id">
-                <li>{{ serie.name }}</li>
-                <!-- <li>{{ serie.original_title }}</li> -->
-                <li>
-                    <img v-if="countryCodes.includes(serie.original_language)" width="30px"
-                        :src="'/img/flags4x3/' + serie.original_language + '.svg'" alt="country flag">
-                    <span v-else>{{ serie.original_language }}</span>
-                </li>
-                <li>{{ serie.vote_average }}</li>
-            </ul>
+            <div v-for="serie in store.seriesResults" :key="serie.id" class="card">
+                <h3>{{ serie.name }}</h3>
+                <!-- <h4>{{ serie.original_title }}</h4> -->
+                <img v-if="countryCodes.includes(serie.original_language)" width="30px"
+                    :src="'/img/flags4x3/' + serie.original_language + '.svg'" alt="country flag">
+                <h6 v-else>{{ serie.original_language }}</h6>
+                <h5>{{ serie.vote_average }}</h5>
+                <img :src="'https://image.tmdb.org/t/p/w342/' + serie.backdrop_path" alt="serie poster">
+            </div>
         </div>
     </main>
 </template>
