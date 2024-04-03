@@ -15,8 +15,9 @@ export default {
 
 <template>
     <main>
-        <template v-if="store.results.length > 0">
-            <ul v-for="movie in store.results" :key="movie.id">
+        <!-- movies -->
+        <div v-if="store.moviesResults.length > 0" class="movies">
+            <ul v-for="movie in store.moviesResults" :key="movie.id">
                 <li>{{ movie.title }}</li>
                 <li>{{ movie.original_title }}</li>
                 <li>
@@ -26,7 +27,20 @@ export default {
                 </li>
                 <li>{{ movie.vote_average }}</li>
             </ul>
-        </template>
+        </div>
+        <!-- tv series -->
+        <div v-if="store.seriesResults.length > 0" class="series">
+            <ul v-for="serie in store.seriesResults" :key="serie.id">
+                <li>{{ serie.name }}</li>
+                <!-- <li>{{ serie.original_title }}</li> -->
+                <li>
+                    <img v-if="countryCodes.includes(serie.original_language)" width="30px"
+                        :src="'/img/flags4x3/' + serie.original_language + '.svg'" alt="country flag">
+                    <span v-else>{{ serie.original_language }}</span>
+                </li>
+                <li>{{ serie.vote_average }}</li>
+            </ul>
+        </div>
     </main>
 </template>
 

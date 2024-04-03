@@ -15,7 +15,7 @@ export default {
     <header>
         <nav>
             <input v-model="store.search" type="text" placeholder="Search Movies...">
-            <button @click="store.getMovies">Search</button>
+            <button @click="store.getFilms">Search</button>
         </nav>
     </header>
 </template>
