@@ -158,38 +158,26 @@ main {
     }
 }
 
-@media screen and (min-width: 1530px) {
-    main {
-        .movies {
+/* media queries -------------------------------->  */
 
-            .card {
-                background-color: blueviolet;
-                width: calc(100% / 6 - 0.25rem);
-            }
-        }
+@media screen and (min-width: 1530px) {
+    main .movies .card {
+        background-color: blueviolet;
+        width: calc(100% / 6 - 0.25rem);
     }
 }
 
 @media screen and (max-width: 1440px) {
-    main {
-        .movies {
-
-            .card {
-                background-color: blueviolet;
-                width: calc(100% / 5 - 0.25rem);
-            }
-        }
+    main .movies .card {
+        background-color: blueviolet;
+        width: calc(100% / 5 - 0.25rem);
     }
 }
 
 @media screen and (max-width: 1280px) {
-    main {
-        .movies {
-            .card {
-                background-color: blueviolet;
-                width: calc(100% / 4 - 0.25rem);
-            }
-        }
+    main .movies .card {
+        background-color: blueviolet;
+        width: calc(100% / 4 - 0.25rem);
     }
 }
 
