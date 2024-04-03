@@ -32,7 +32,7 @@ export default {
                         <div class="title">
                             <h4>Title: </h4><span>{{ movie.title }}</span>
                         </div>
-                        <div class="original_title">
+                        <div v-if="movie.origTitle && movie.origTitle !== movie.title" class="original_title">
                             <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
                         </div>
                         <!-- rating -->
@@ -111,7 +111,7 @@ main {
                         padding-top: 1rem;
 
                         .fa-solid {
-                            color: rgb(255, 170, 0);
+                            color: var(--bflix-warning);
                         }
                     }
                 }
