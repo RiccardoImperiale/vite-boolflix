@@ -4,8 +4,7 @@ const apiKey = '46be8bec12c11689d3357747050c2d2b';
 
 export const store = reactive({
     search: '',
-    moviesResults: [],
-    seriesResults: [],
+    results: [],
 
     getFilms() {
         this.getMovies();
@@ -14,22 +13,35 @@ export const store = reactive({
     getMovies() {
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`)
             .then(res => {
-                this.moviesResults = res.data.results;
-                console.log(this.moviesResults);
+                res.data.results.forEach(movie => {
+                    this.results.push({
+                        id: movie.id,
+                        category: 'movie',
+                        title: movie.title,
+                        language: movie.original_language,
+                        origTitle: movie.original_title,
+                        vote: movie.vote_average,
+                        image: movie.poster_path,
+                    })
+                })
+                console.log(this.results);
             }).catch(err => console.error(err.message));
     },
     getTvSeries() {
         axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${this.search}`)
             .then(res => {
-                this.seriesResults = res.data.results;
-                // res.data.results.forEach(tv => {
-                //     this.tvResults.push({
-                //         title: tv.name,
-                //         language: tv.original_language,
-                //         vote: tv.vote_average,
-                //     })
-                // })
-                console.log(this.seriesResults);
+                res.data.results.forEach(tv => {
+                    this.results.push({
+                        id: tv.id,
+                        category: 'series',
+                        title: tv.name,
+                        language: tv.original_language,
+                        origTitle: null,
+                        vote: tv.vote_average,
+                        image: tv.poster_path,
+                    })
+                })
+                console.log(this.results);
             }).catch(err => console.error(err.message));
     },
 })

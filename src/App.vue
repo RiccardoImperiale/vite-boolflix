@@ -12,6 +12,8 @@ export default {
 </script>
 
 <template>
+  <!-- <span class="flag-icon flag-icon-kr"></span> -->
+
   <AppHeader />
   <AppMain />
 </template>

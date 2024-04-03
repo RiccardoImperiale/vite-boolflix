@@ -24,7 +24,12 @@ attenti ad avere alla fine dei valori simili (le serie e i film hanno campi nel 
 risposta diversi, simili ma non sempre identici)
 
 ## Milestone 3:
-In questa milestone come prima cosa aggiungiamo la copertina del film o della serie
+- In questa milestone come prima cosa aggiungiamo la copertina del film o della serie
 al nostro elenco. Ci viene passata dall’API solo la parte finale dell’URL, questo
 perché poi potremo generare da quella porzione di URL tante dimensioni diverse.
 Dovremo prendere quindi l’URL base delle immagini di TMDB:
+- Trasformiamo poi il voto da 1 a 10 decimale in un numero intero da 1 a 5, così da
+permetterci di stampare a schermo un numero di stelle piene che vanno da 1 a 5,
+lasciando le restanti vuote (troviamo le icone in FontAwesome).
+Arrotondiamo sempre per eccesso all’unità successiva, non gestiamo icone mezze
+piene (o mezze vuote :P)

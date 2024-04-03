@@ -21,45 +21,23 @@ export default {
 <template>
     <main>
         <!-- movies -->
-        <div v-if="store.moviesResults.length > 0" class="movies">
-            <div v-for="movie in store.moviesResults" :key="movie.id" class="card">
+        <div v-if="store.results.length > 0" class="movies">
+            <div v-for="movie in store.results" :key="movie.id" class="card">
                 <h3>{{ movie.title }}</h3>
-                <h4>{{ movie.original_title }}</h4>
-                <img v-if="countryCodes.includes(movie.original_language)" width="30px"
-                    :src="'/img/flags4x3/' + movie.original_language + '.svg'" alt="country flag">
-                <h4 v-else>{{ movie.original_language }}</h4>
+                <h4>{{ movie.origTitle }}</h4>
+                <img v-if="countryCodes.includes(movie.language)" width="30px"
+                    :src="'/img/flags4x3/' + movie.language + '.svg'" alt="country flag">
+                <h4 v-else>{{ movie.language }}</h4>
                 <!-- rating -->
                 <div class="rating">
-                    <i v-for="fullStar in getRatingStars(movie.vote_average)" :key="fullStar"
-                        class="fa-solid fa-star"></i>
-                    <i v-for="emptyStar in 5 - getRatingStars(movie.vote_average)" :key="emptyStar"
+                    <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar" class="fa-solid fa-star"></i>
+                    <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
                         class="fa-regular fa-star"></i>
                 </div>
-                <img v-if="movie.backdrop_path" :src="'https://image.tmdb.org/t/p/w342/' + movie.backdrop_path"
-                    alt="movie poster">
+                <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w342/' + movie.image" alt="movie poster">
                 <div v-else>no image</div>
             </div>
             <hr>
-        </div>
-        <!-- tv series -->
-        <div v-if="store.seriesResults.length > 0" class="series">
-            <div v-for="series in store.seriesResults" :key="series.id" class="card">
-                <h3>{{ series.name }}</h3>
-                <!-- <h4>{{ series.original_title }}</h4> -->
-                <img v-if="countryCodes.includes(series.original_language)" width="30px"
-                    :src="'/img/flags4x3/' + series.original_language + '.svg'" alt="country flag">
-                <h4 v-else>{{ series.original_language }}</h4>
-                <!-- rating -->
-                <div class="rating">
-                    <i v-for="fullStar in getRatingStars(series.vote_average)" :key="fullStar"
-                        class="fa-solid fa-star"></i>
-                    <i v-for="emptyStar in 5 - getRatingStars(series.vote_average)" :key="emptyStar"
-                        class="fa-regular fa-star"></i>
-                </div>
-                <img v-if="series.backdrop_path" :src="'https://image.tmdb.org/t/p/w342/' + series.backdrop_path"
-                    alt="series poster">
-                <div v-else>no image</div>
-            </div>
         </div>
     </main>
 </template>
