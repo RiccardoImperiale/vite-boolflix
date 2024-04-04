@@ -72,18 +72,18 @@ export default {
                     </div>
                 </div>
             </div>
-            <div v-else class="no_results">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <div>No Movies or TV Series found...</div>
-            </div>
         </Transition>
+        <div v-show="store.results.length === 0" class="no_results">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>No Movies or TV Series found...</div>
+        </div>
     </main>
 </template>
 
 <style>
 .cards-enter-active,
 .cards-leave-active {
-    transition: all 1s ease;
+    transition: all .5s ease;
 }
 
 .cards-enter-from,
@@ -93,8 +93,8 @@ export default {
 }
 
 main {
-    color: white;
-    padding: 2rem 0;
+    color: var(--bflix-light);
+    padding: 1.5rem 0;
 
     .movies {
         display: flex;

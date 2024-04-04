@@ -7,14 +7,22 @@ export const store = reactive({
     search: '',
     results: [],
     defaultSearch: 'Batman',
-    genres: {},
+    genres: [],
+    allGenres: [],
+    isMovies: false,
+    isSeries: false,
 
-    getFilms() {
+    async getFilms() {
+        this.reset();
+        await this.getAllGenres();
+        await this.getMovies();
+        await this.getTvSeries();
+        console.log(this.genres, this.allGenres);
+    },
+    reset() {
         this.results = [];
-        this.getGenres('tv');
-        this.getGenres('movie');
-        this.getMovies();
-        this.getTvSeries();
+        this.isMovies = false;
+        this.isSeries = false;
     },
     async getMovies() {
         try {
@@ -68,14 +76,25 @@ export const store = reactive({
             console.error(`Failed to fetch actors for movie id: ${movieId}`);
         }
     },
-    async getGenres(category) {
+    async getAllGenres() {
         try {
-            const res = await axios.get(`${baseApi}/genre/${category}/list?api_key=${apiKey}`);
-            category === 'tv' && (this.genres.tv = res.data.genres);
-            category === 'movie' && (this.genres.movies = res.data.genres);
+            const moviesRes = await axios.get(`${baseApi}/genre/movie/list?api_key=${apiKey}`);
+            const seriesRes = await axios.get(`${baseApi}/genre/tv/list?api_key=${apiKey}`);
+            const moviesGenres = moviesRes.data.genres;
+            const seriesGenres = seriesRes.data.genres;
+            this.genres = {
+                tv: seriesGenres,
+                movies: moviesGenres
+            };
+            const allGenres = [...moviesGenres, ...seriesGenres];
+            // Remove duplicate genres by using Set
+            this.allGenres = Array.from(new Set(allGenres.map(genre => genre.id))).map(id => {
+                return allGenres.find(genre => genre.id === id);
+            });
+
         } catch (err) {
             console.error(err.message);
         }
-    },
+    }
 })
 

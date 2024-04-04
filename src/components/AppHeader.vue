@@ -6,23 +6,22 @@ export default {
     data() {
         return {
             store,
-            isMovies: false,
-            isSeries: false
+
         }
     },
     methods: {
         filterMovies() {
-            this.isMovies = true;
-            this.isSeries = false;
+            store.isMovies = true;
+            store.isSeries = false;
             store.results = [];
-            store.getGenres('movie');
+            store.getAllGenres();
             store.getMovies();
         },
         filterSeries() {
-            this.isSeries = true;
-            this.isMovies = false;
+            store.isSeries = true;
+            store.isMovies = false;
             store.results = [];
-            store.getGenres('tv');
+            store.getAllGenres();
             store.getTvSeries();
         },
     }
@@ -33,10 +32,10 @@ export default {
     <header>
         <nav class="container">
             <div class="left">
-                <img src="/img/boolflix-logo.png" alt="">
+                <img src="/img/boolflix-logo.png" alt="boolflix logo">
                 <div class="links">
-                    <span @click="filterMovies" :class="isMovies && 'is-active'">Movies</span>
-                    <span @click="filterSeries" :class="isSeries && 'is-active'">TV Series</span>
+                    <span @click="filterMovies" :class="store.isMovies && 'is-active'">Movies</span>
+                    <span @click="filterSeries" :class="store.isSeries && 'is-active'">TV Series</span>
                     <span>Genres</span>
                 </div>
             </div>
@@ -45,6 +44,13 @@ export default {
                 <i @click="store.getFilms" class="fa-solid fa-magnifying-glass"></i>
             </div>
         </nav>
+        <div class="genres_bar">
+            <div class="container">
+                <div class="genres">
+                    <span v-for="genre in store.allGenres" class="genre" :key="genre.id">{{ genre.name }}</span>
+                </div>
+            </div>
+        </div>
     </header>
 </template>
 
@@ -53,9 +59,40 @@ export default {
     color: var(--bflix-secondary);
 }
 
+.genres_bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: .3rem 0;
+    background: linear-gradient(90deg, var(--bflix-darker) 0%, #b00000 50%, var(--bflix-darker) 100%);
+    z-index: 1;
+    font-size: .85rem;
+
+    .genres {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: .25rem;
+
+        .genre {
+            background-color: var(--bflix-dark);
+            padding: .2rem .6rem;
+            border-radius: .25rem;
+            text-wrap: nowrap;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgb(100, 0, 0);
+            }
+        }
+    }
+}
+
 header {
     background-color: var(--bflix-dark);
     color: var(--bflix-light);
+    z-index: 2;
 
     & nav {
         padding: 1rem 0;
