@@ -1,6 +1,7 @@
 :root {
   --bflix-darker: #0d0d0d;
   --bflix-dark: #141414;
+  --bflix-secondary: rgb(58, 58, 58);
   --bflix-light: white;
   --bflix-warning: #ffaa00;
   --bflix-danger: #d54300;

@@ -6,15 +6,21 @@ export default {
     data() {
         return {
             store,
+            isMovies: false,
+            isSeries: false
         }
     },
     methods: {
         filterMovies() {
+            this.isMovies = true;
+            this.isSeries = false;
             store.results = [];
             store.getGenres('movie');
             store.getMovies();
         },
         filterSeries() {
+            this.isSeries = true;
+            this.isMovies = false;
             store.results = [];
             store.getGenres('tv');
             store.getTvSeries();
@@ -29,8 +35,9 @@ export default {
             <div class="left">
                 <img src="/img/boolflix-logo.png" alt="">
                 <div class="links">
-                    <span @click="filterMovies">Movies</span>
-                    <span @click="filterSeries">TV Series</span>
+                    <span @click="filterMovies" :class="isMovies && 'is-active'">Movies</span>
+                    <span @click="filterSeries" :class="isSeries && 'is-active'">TV Series</span>
+                    <span>Genres</span>
                 </div>
             </div>
             <div class="right">
@@ -42,6 +49,10 @@ export default {
 </template>
 
 <style>
+.is-active {
+    color: var(--bflix-secondary);
+}
+
 header {
     background-color: var(--bflix-dark);
     color: var(--bflix-light);
@@ -80,9 +91,9 @@ header {
                 background-color: transparent;
                 border: none;
                 outline: none;
-                border-bottom: 1px solid var(--bflix-light);
+                border-bottom: 1px solid var(--bflix-secondary);
                 color: var(--bflix-light);
-                padding: 1rem 0;
+                padding: .65rem 0;
                 font-size: 1rem;
             }
 
