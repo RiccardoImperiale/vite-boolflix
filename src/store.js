@@ -6,12 +6,13 @@ export const store = reactive({
     search: '',
     results: [],
     defaultSearch: 'The Lego Batman Movie',
+    genres: {},
 
     getFilms() {
         this.results = [];
         this.getMovies();
         this.getTvSeries();
-        console.log(this.results);
+        console.log(this.genres);
     },
     async getMovies() {
         try {
@@ -29,6 +30,7 @@ export const store = reactive({
                     actors: await this.getActors(movie.id)
                 });
             }
+            await this.getMovieGenres();
         } catch (err) {
             console.error(err.message);
         }
@@ -49,10 +51,12 @@ export const store = reactive({
                     actors: await this.getActors(tv.id)
                 })
             }
+            await this.getSeriesGenres();
         } catch (err) {
             console.error(err.message);
         }
     },
+    // 
     async getActors(movieId) {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
@@ -61,7 +65,22 @@ export const store = reactive({
             return first5actors.join(", ");
         } catch (err) {
             console.error(err.message);
-            // return [];
+        }
+    },
+    async getMovieGenres() {
+        try {
+            await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
+                .then(res => this.genres.movies = res.data.genres);
+        } catch (err) {
+            console.error(err.message);
+        }
+    },
+    async getSeriesGenres() {
+        try {
+            await axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`)
+                .then(res => this.genres.tv = res.data.genres);
+        } catch (err) {
+            console.error(err.message);
         }
     }
 })
