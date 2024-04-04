@@ -16,6 +16,7 @@ export default {
     },
     mounted() {
         this.store.getFilms();
+        this.store.getGenres();
     }
 }
 </script>

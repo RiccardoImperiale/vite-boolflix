@@ -12,6 +12,10 @@ export const store = reactive({
         this.results = [];
         this.getMovies();
         this.getTvSeries();
+    },
+    getGenres() {
+        this.getMoviesGenres()
+        this.getSeriesGenres()
         console.log(this.genres);
     },
     async getMovies() {
@@ -30,7 +34,6 @@ export const store = reactive({
                     actors: await this.getActors(movie.id)
                 });
             }
-            await this.getMovieGenres();
         } catch (err) {
             console.error(err.message);
         }
@@ -51,7 +54,6 @@ export const store = reactive({
                     actors: await this.getActors(tv.id)
                 })
             }
-            await this.getSeriesGenres();
         } catch (err) {
             console.error(err.message);
         }
@@ -67,18 +69,18 @@ export const store = reactive({
             console.error(err.message);
         }
     },
-    async getMovieGenres() {
+    async getMoviesGenres() {
         try {
-            await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
-                .then(res => this.genres.movies = res.data.genres);
+            const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
+            this.genres.movies = res.data.genres;
         } catch (err) {
             console.error(err.message);
         }
     },
     async getSeriesGenres() {
         try {
-            await axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`)
-                .then(res => this.genres.tv = res.data.genres);
+            const res = await axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`);
+            this.genres.tv = res.data.genres;
         } catch (err) {
             console.error(err.message);
         }
