@@ -8,7 +8,7 @@
 }
 
 html {
-  scrollbar-color: var(--bflix-warning) transparent;
+  scrollbar-color: var(--bflix-secondary) transparent;
   scrollbar-width: thin;
 }
 
@@ -23,8 +23,59 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* utilities ----------------------------------> */
+
 .container {
   max-width: 1920px;
   width: 90%;
   margin: auto;
+}
+
+.is-active {
+  color: var(--bflix-secondary);
+}
+
+.p-top-open {
+  transition: padding-top .5s ease;
+  padding-top: 5rem;
+}
+
+.p-top-close {
+  transition: padding-top .5s ease;
+  padding-top: 1rem;
+}
+
+/* transitions --------------------------------> */
+
+.genreBar-enter-active,
+.genreBar-leave-active {
+  transition: all 0.5s ease;
+}
+
+.genreBar-enter-from,
+.genreBar-leave-to {
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+.cards-enter-active,
+.cards-leave-active {
+  transition: all .5s ease;
+}
+
+.cards-enter-from,
+.cards-leave-to {
+  opacity: 0;
+  transform: translatey(500px);
+}
+
+.inputIcon-enter-active,
+.inputIcon-leave-active {
+  transition: all .25s ease;
+}
+
+.inputIcon-enter-from,
+.inputIcon-leave-to {
+  opacity: 0;
+  scale: 0.2;
 }

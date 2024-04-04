@@ -11,13 +11,13 @@ export const store = reactive({
     allGenres: [],
     isMovies: false,
     isSeries: false,
+    isGenreBar: false,
 
     async getFilms() {
         this.reset();
         await this.getAllGenres();
         await this.getMovies();
         await this.getTvSeries();
-        console.log(this.genres, this.allGenres);
     },
     reset() {
         this.results = [];
@@ -80,18 +80,53 @@ export const store = reactive({
         try {
             const moviesRes = await axios.get(`${baseApi}/genre/movie/list?api_key=${apiKey}`);
             const seriesRes = await axios.get(`${baseApi}/genre/tv/list?api_key=${apiKey}`);
-            const moviesGenres = moviesRes.data.genres;
-            const seriesGenres = seriesRes.data.genres;
             this.genres = {
-                tv: seriesGenres,
-                movies: moviesGenres
+                tv: seriesRes.data.genres,
+                movies: moviesRes.data.genres
             };
-            const allGenres = [...moviesGenres, ...seriesGenres];
+            const allGenres = [...moviesRes.data.genres, ...seriesRes.data.genres];
             // Remove duplicate genres by using Set
             this.allGenres = Array.from(new Set(allGenres.map(genre => genre.id))).map(id => {
                 return allGenres.find(genre => genre.id === id);
             });
 
+        } catch (err) {
+            console.error(err.message);
+        }
+    },
+    async getFilmsByGenre(genreId) {
+        this.results = [];
+        try {
+            const moviesRes = await axios.get(`${baseApi}/discover/movie?api_key=${apiKey}&with_genres=${genreId}`);
+            const seriesRes = await axios.get(`${baseApi}/discover/tv?api_key=${apiKey}&with_genres=${genreId}`);
+            for (const movie of moviesRes.data.results) {
+                this.results.push({
+                    id: movie.id,
+                    genre_ids: movie.genre_ids,
+                    genres: this.genres.movies.filter(genre => movie.genre_ids.includes(genre.id)),
+                    title: movie.title,
+                    overview: movie.overview,
+                    language: movie.original_language,
+                    origTitle: movie.original_title,
+                    vote: movie.vote_average,
+                    image: movie.poster_path,
+                    actors: await this.getActors(movie.id, 'movie')
+                });
+            }
+            for (const tv of seriesRes.data.resultsies) {
+                this.results.push({
+                    id: tv.id,
+                    genre_ids: tv.genre_ids,
+                    genres: this.genres.tv.filter(genre => tv.genre_ids.includes(genre.id)),
+                    title: tv.name,
+                    overview: tv.overview,
+                    language: tv.original_language,
+                    origTitle: tv.original_name,
+                    vote: tv.vote_average,
+                    image: tv.poster_path,
+                    actors: await this.getActors(tv.id, 'tv')
+                })
+            }
         } catch (err) {
             console.error(err.message);
         }

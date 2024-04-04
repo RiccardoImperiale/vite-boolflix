@@ -6,7 +6,6 @@ export default {
     data() {
         return {
             store,
-
         }
     },
     methods: {
@@ -24,6 +23,9 @@ export default {
             store.getAllGenres();
             store.getTvSeries();
         },
+        toggleGenresBar() {
+            store.isGenreBar = !store.isGenreBar;
+        },
     }
 }
 </script>
@@ -36,54 +38,67 @@ export default {
                 <div class="links">
                     <span @click="filterMovies" :class="store.isMovies && 'is-active'">Movies</span>
                     <span @click="filterSeries" :class="store.isSeries && 'is-active'">TV Series</span>
-                    <span>Genres</span>
+                    <span @click="toggleGenresBar" :class="store.isGenreBar && 'is-active'">Genres</span>
                 </div>
             </div>
             <div class="right">
                 <input v-model="store.search" type="text" placeholder="Search Movies...">
-                <i @click="store.getFilms" class="fa-solid fa-magnifying-glass"></i>
+                <transition name="inputIcon">
+                    <i v-if="store.search !== ''" @click="store.getFilms" class="fa-solid fa-magnifying-glass"></i>
+                </transition>
             </div>
         </nav>
-        <div class="genres_bar">
-            <div class="container">
-                <div class="genres">
-                    <span v-for="genre in store.allGenres" class="genre" :key="genre.id">{{ genre.name }}</span>
+    </header>
+    <div class="bar_container">
+        <transition name="genreBar">
+            <div v-if="store.isGenreBar" class="genres_bar">
+                <div class="container">
+                    <div class="genres">
+                        <span @click="store.getFilmsByGenre(genre.id)" v-for="genre in store.allGenres" class="genre"
+                            :key="genre.id">{{ genre.name }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </transition>
+    </div>
 </template>
 
 <style>
-.is-active {
-    color: var(--bflix-secondary);
-}
-
-.genres_bar {
-    display: flex;
-    align-items: center;
+.bar_container {
+    height: 65px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 2;
     width: 100%;
-    padding: .3rem 0;
-    background: linear-gradient(90deg, var(--bflix-darker) 0%, #b00000 50%, var(--bflix-darker) 100%);
-    z-index: 1;
-    font-size: .85rem;
+    margin: auto;
 
-    .genres {
+    .genres_bar {
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: .25rem;
+        width: 100%;
+        height: 65px;
+        background: linear-gradient(90deg, var(--bflix-darker) 0%, #b00000 50%, var(--bflix-darker) 100%);
+        z-index: 1;
+        font-size: .85rem;
 
-        .genre {
-            background-color: var(--bflix-dark);
-            padding: .2rem .6rem;
-            border-radius: .25rem;
-            text-wrap: nowrap;
-            cursor: pointer;
+        .genres {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: .25rem;
 
-            &:hover {
-                background-color: rgb(100, 0, 0);
+            .genre {
+                background-color: var(--bflix-dark);
+                padding: .2rem .6rem;
+                border-radius: .25rem;
+                text-wrap: nowrap;
+                cursor: pointer;
+                color: var(--bflix-light);
+
+                &:hover {
+                    background-color: rgb(100, 0, 0);
+                }
             }
         }
     }

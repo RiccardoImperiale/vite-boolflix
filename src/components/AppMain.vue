@@ -24,7 +24,8 @@ export default {
     <main class="container">
         <!-- movies -->
         <Transition name="cards">
-            <div v-if="store.results.length > 0" class="movies">
+            <div v-if="store.results.length > 0" class="movies"
+                :class="store.isGenreBar ? 'p-top-open' : 'p-top-close'">
                 <div v-for="movie in store.results" :key="movie.id" class="card">
                     <div class="image">
                         <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w300/' + movie.image"
@@ -81,20 +82,8 @@ export default {
 </template>
 
 <style>
-.cards-enter-active,
-.cards-leave-active {
-    transition: all .5s ease;
-}
-
-.cards-enter-from,
-.cards-leave-to {
-    opacity: 0;
-    transform: translatey(500px);
-}
-
 main {
     color: var(--bflix-light);
-    padding: 1.5rem 0;
 
     .movies {
         display: flex;
