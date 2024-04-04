@@ -5,49 +5,64 @@ const apiKey = '46be8bec12c11689d3357747050c2d2b';
 export const store = reactive({
     search: '',
     results: [],
+    defaultSearch: 'The Lego Batman Movie',
 
     getFilms() {
+        this.results = [];
         this.getMovies();
         this.getTvSeries();
+        console.log(this.results);
     },
-    getMovies() {
-        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search}`)
-            .then(res => {
-                console.log(res.data)
-                res.data.results.forEach(movie => {
-                    this.results.push({
-                        id: movie.id,
-                        // category: 'movie',
-                        genre_ids: movie.genre_id,
-                        title: movie.title,
-                        overview: movie.overview,
-                        language: movie.original_language,
-                        origTitle: movie.original_title,
-                        vote: movie.vote_average,
-                        image: movie.poster_path,
-                    })
+    async getMovies() {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search || this.defaultSearch}`);
+            for (const movie of res.data.results) {
+                this.results.push({
+                    id: movie.id,
+                    genre_ids: movie.genre_ids,
+                    title: movie.title,
+                    overview: movie.overview,
+                    language: movie.original_language,
+                    origTitle: movie.original_title,
+                    vote: movie.vote_average,
+                    image: movie.poster_path,
+                    actors: await this.getActors(movie.id)
+                });
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+    },
+    async getTvSeries() {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${this.search || this.defaultSearch}`)
+            for (const tv of res.data.results) {
+                this.results.push({
+                    id: tv.id,
+                    genre_ids: tv.genre_ids,
+                    title: tv.name,
+                    overview: tv.overview,
+                    language: tv.original_language,
+                    origTitle: tv.original_name,
+                    vote: tv.vote_average,
+                    image: tv.poster_path,
+                    actors: await this.getActors(tv.id)
                 })
-                console.log(this.results);
-            }).catch(err => console.error(err.message));
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
     },
-    getTvSeries() {
-        axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${this.search}`)
-            .then(res => {
-                res.data.results.forEach(tv => {
-                    this.results.push({
-                        id: tv.id,
-                        // category: 'series',
-                        genre_ids: tv.genre_id,
-                        title: tv.name,
-                        overview: tv.overview,
-                        language: tv.original_language,
-                        origTitle: null,
-                        vote: tv.vote_average,
-                        image: tv.poster_path,
-                    })
-                })
-                console.log(this.results);
-            }).catch(err => console.error(err.message));
-    },
+    async getActors(movieId) {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
+            let actors = res.data.cast.map(actor => actor.name);
+            const first5actors = actors.slice(0, 5);
+            return first5actors.join(", ");
+        } catch (err) {
+            console.error(err.message);
+            // return [];
+        }
+    }
 })
 

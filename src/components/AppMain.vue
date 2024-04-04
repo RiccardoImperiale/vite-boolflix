@@ -12,9 +12,11 @@ export default {
     methods: {
         getRatingStars(rating) {
             return Math.ceil(rating /= 2);
-        }
+        },
+    },
+    mounted() {
+        this.store.getFilms();
     }
-
 }
 </script>
 
@@ -34,6 +36,10 @@ export default {
                         </div>
                         <div v-if="movie.origTitle && movie.origTitle !== movie.title" class="original_title">
                             <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
+                        </div>
+                        <!-- actors -->
+                        <div v-if="movie.actors" class="actors">
+                            <h4>Cast: </h4><span>{{ movie.actors }}</span>
                         </div>
                         <!-- rating -->
                         <div class="rating">
@@ -58,7 +64,6 @@ export default {
                     </div>
                 </div>
             </div>
-            <hr>
         </div>
     </main>
 </template>
@@ -102,10 +107,11 @@ main {
                 inset: 0;
                 opacity: 0;
                 transition: opacity .5s ease;
-                padding: 2rem;
+                padding: 1rem;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                font-size: .85rem;
 
                 .card:hover & {
                     opacity: .85;
@@ -114,15 +120,17 @@ main {
                 .top {
                     & h4 {
                         display: inline;
+                        font-size: 1rem;
                     }
 
-                    .original_title {
+                    .original_title,
+                    .actors,
+                    .rating,
+                    .overview {
                         padding-top: .5rem;
-
                     }
 
                     .rating {
-                        padding-top: .5rem;
                         display: flex;
                         gap: .5rem;
 
@@ -132,10 +140,12 @@ main {
                     }
 
                     .overview {
-                        padding-top: .5rem;
                         height: 100px;
-                        overflow-y: hidden;
+                        overflow-y: auto;
+                        padding-right: .25rem;
                         text-overflow: ellipsis;
+                        scrollbar-color: var(--bflix-warning) transparent;
+                        scrollbar-width: thin;
                     }
                 }
 
@@ -162,28 +172,24 @@ main {
 
 @media screen and (min-width: 1530px) {
     main .movies .card {
-        background-color: blueviolet;
         width: calc(100% / 6 - 0.25rem);
     }
 }
 
 @media screen and (max-width: 1440px) {
     main .movies .card {
-        background-color: blueviolet;
         width: calc(100% / 5 - 0.25rem);
     }
 }
 
 @media screen and (max-width: 1280px) {
     main .movies .card {
-        background-color: blueviolet;
         width: calc(100% / 4 - 0.25rem);
     }
 }
 
 @media screen and (max-width: 970px) {
     main .movies .card {
-        background-color: blueviolet;
         width: calc(100% / 3 - 0.25rem);
     }
 }

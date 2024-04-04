@@ -80,7 +80,6 @@ header {
                 position: absolute;
             }
         }
-
     }
 }
 
