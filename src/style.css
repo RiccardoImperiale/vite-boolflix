@@ -5,7 +5,11 @@
   --bflix-light: white;
   --bflix-warning: #ffaa00;
   --bflix-danger: #d54300;
+}
 
+html {
+  scrollbar-color: var(--bflix-warning) transparent;
+  scrollbar-width: thin;
 }
 
 * {

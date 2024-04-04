@@ -72,6 +72,10 @@ export default {
                     </div>
                 </div>
             </div>
+            <div v-else class="no_results">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>No Movies or TV Series found...</div>
+            </div>
         </Transition>
     </main>
 </template>
@@ -188,9 +192,19 @@ main {
                     & img {
                         height: 100%;
                     }
-
                 }
             }
+        }
+    }
+
+    .no_results {
+        text-align: center;
+        margin-top: 2rem;
+
+        & i {
+            color: var(--bflix-warning);
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
     }
 }
