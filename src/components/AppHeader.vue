@@ -7,6 +7,18 @@ export default {
         return {
             store,
         }
+    },
+    methods: {
+        filterMovies() {
+            store.results = [];
+            store.getGenres('movie');
+            store.getMovies();
+        },
+        filterSeries() {
+            store.results = [];
+            store.getGenres('tv');
+            store.getTvSeries();
+        },
     }
 }
 </script>
@@ -17,8 +29,8 @@ export default {
             <div class="left">
                 <img src="/img/boolflix-logo.png" alt="">
                 <div class="links">
-                    <span>Movies</span>
-                    <span>TV Series</span>
+                    <span @click="filterMovies">Movies</span>
+                    <span @click="filterSeries">TV Series</span>
                 </div>
             </div>
             <div class="right">

@@ -1,6 +1,7 @@
 import { reactive } from 'vue';
 import axios from 'axios';
 const apiKey = '46be8bec12c11689d3357747050c2d2b';
+const baseApi = 'https://api.themoviedb.org/3';
 
 export const store = reactive({
     search: '',
@@ -17,7 +18,7 @@ export const store = reactive({
     },
     async getMovies() {
         try {
-            const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${this.search || this.defaultSearch}`);
+            const res = await axios.get(`${baseApi}/search/movie?api_key=${apiKey}&query=${this.search || this.defaultSearch}`);
             for (const movie of res.data.results) {
                 this.results.push({
                     id: movie.id,
@@ -38,7 +39,7 @@ export const store = reactive({
     },
     async getTvSeries() {
         try {
-            const res = await axios.get(`https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${this.search || this.defaultSearch}`)
+            const res = await axios.get(`${baseApi}/search/tv?api_key=${apiKey}&query=${this.search || this.defaultSearch}`)
             for (const tv of res.data.results) {
                 this.results.push({
                     id: tv.id,
@@ -59,7 +60,7 @@ export const store = reactive({
     },
     async getActors(movieId, category) {
         try {
-            const res = await axios.get(`https://api.themoviedb.org/3/${category}/${movieId}/credits?api_key=${apiKey}`);
+            const res = await axios.get(`${baseApi}/${category}/${movieId}/credits?api_key=${apiKey}`);
             let actors = res.data.cast.map(actor => actor.name);
             const first5actors = actors.slice(0, 5);
             return first5actors.join(", ");
@@ -69,7 +70,7 @@ export const store = reactive({
     },
     async getGenres(category) {
         try {
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/${category}/list?api_key=${apiKey}`);
+            const res = await axios.get(`${baseApi}/genre/${category}/list?api_key=${apiKey}`);
             category === 'tv' && (this.genres.tv = res.data.genres);
             category === 'movie' && (this.genres.movies = res.data.genres);
         } catch (err) {
