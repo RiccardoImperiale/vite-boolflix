@@ -7,17 +7,13 @@ export const store = reactive({
     results: [],
     defaultSearch: 'Batman',
     genres: {},
-    invalidIds: [100535, 4625, 79588, 31749, 125909, 19579, 4303],
 
     getFilms() {
         this.results = [];
-        this.getGenres()
+        this.getGenres('tv');
+        this.getGenres('movie');
         this.getMovies();
         this.getTvSeries();
-    },
-    getGenres() {
-        this.getMoviesGenres()
-        this.getSeriesGenres()
     },
     async getMovies() {
         try {
@@ -33,7 +29,7 @@ export const store = reactive({
                     origTitle: movie.original_title,
                     vote: movie.vote_average,
                     image: movie.poster_path,
-                    actors: await this.getActors(movie.id)
+                    actors: await this.getActors(movie.id, 'movie')
                 });
             }
         } catch (err) {
@@ -54,40 +50,31 @@ export const store = reactive({
                     origTitle: tv.original_name,
                     vote: tv.vote_average,
                     image: tv.poster_path,
-                    actors: await this.getActors(tv.id)
+                    actors: await this.getActors(tv.id, 'tv')
                 })
             }
         } catch (err) {
             console.error(err.message);
         }
     },
-    async getActors(movieId) {
-        if (!this.invalidIds.includes(movieId)) {
-            try {
-                const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
-                let actors = res.data.cast.map(actor => actor.name);
-                const first5actors = actors.slice(0, 5);
-                return first5actors.join(", ");
-            } catch {
-                console.error(`Failed to fetch actors for movie id: ${movieId}`);
-            }
+    async getActors(movieId, category) {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/${category}/${movieId}/credits?api_key=${apiKey}`);
+            let actors = res.data.cast.map(actor => actor.name);
+            const first5actors = actors.slice(0, 5);
+            return first5actors.join(", ");
+        } catch {
+            console.error(`Failed to fetch actors for movie id: ${movieId}`);
         }
     },
-    async getMoviesGenres() {
+    async getGenres(category) {
         try {
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
-            this.genres.movies = res.data.genres;
+            const res = await axios.get(`https://api.themoviedb.org/3/genre/${category}/list?api_key=${apiKey}`);
+            category === 'tv' && (this.genres.tv = res.data.genres);
+            category === 'movie' && (this.genres.movies = res.data.genres);
         } catch (err) {
             console.error(err.message);
         }
     },
-    async getSeriesGenres() {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`);
-            this.genres.tv = res.data.genres;
-        } catch (err) {
-            console.error(err.message);
-        }
-    }
 })
 
