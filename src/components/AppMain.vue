@@ -16,7 +16,6 @@ export default {
     },
     mounted() {
         this.store.getFilms();
-        this.store.getGenres();
     }
 }
 </script>
@@ -37,6 +36,10 @@ export default {
                         </div>
                         <div v-if="movie.origTitle && movie.origTitle !== movie.title" class="original_title">
                             <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
+                        </div>
+                        <!-- genres -->
+                        <div v-if="movie.genres" class="genres">
+                            <h4>Genres: </h4><span v-for="genre in movie.genres">{{ genre.name }}</span>
                         </div>
                         <!-- actors -->
                         <div v-if="movie.actors" class="actors">
@@ -122,13 +125,21 @@ main {
                     & h4 {
                         display: inline;
                         font-size: 1rem;
+                        color: var(--bflix-danger);
                     }
 
                     .original_title,
                     .actors,
+                    .genres,
                     .rating,
                     .overview {
                         padding-top: .5rem;
+                    }
+
+                    .genres {
+                        & span:not(:last-child):after {
+                            content: ' - ';
+                        }
                     }
 
                     .rating {
