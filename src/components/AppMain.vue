@@ -15,7 +15,7 @@ export default {
         },
     },
     mounted() {
-        this.store.getFilms();
+        this.store.allFilms();
     }
 }
 </script>
@@ -188,7 +188,7 @@ main {
 
     .no_results {
         text-align: center;
-        margin-top: 2rem;
+        margin-top: 10rem;
 
         & i {
             color: var(--bflix-warning);

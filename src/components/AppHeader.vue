@@ -14,16 +14,18 @@ export default {
             store.isSeries = false;
             store.results = [];
             store.getAllGenres();
-            store.getMovies();
+            store.getAllMovies();
         },
         filterSeries() {
             store.isSeries = true;
             store.isMovies = false;
             store.results = [];
             store.getAllGenres();
-            store.getTvSeries();
+            store.getAllSeries();
         },
         toggleGenresBar() {
+            // store.isMovies = false;
+            // store.isSeries = false;
             store.isGenreBar = !store.isGenreBar;
         },
     }
@@ -44,7 +46,7 @@ export default {
             <div class="right">
                 <input v-model="store.search" type="text" placeholder="Search Movies...">
                 <transition name="inputIcon">
-                    <i v-if="store.search !== ''" @click="store.getFilms" class="fa-solid fa-magnifying-glass"></i>
+                    <i v-if="store.search !== ''" @click="store.searchFilms" class="fa-solid fa-magnifying-glass"></i>
                 </transition>
             </div>
         </nav>

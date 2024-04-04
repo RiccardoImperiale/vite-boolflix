@@ -6,27 +6,76 @@ const baseApi = 'https://api.themoviedb.org/3';
 export const store = reactive({
     search: '',
     results: [],
-    defaultSearch: 'Batman',
     genres: [],
     allGenres: [],
     isMovies: false,
     isSeries: false,
     isGenreBar: false,
 
-    async getFilms() {
+    async searchFilms() {
         this.reset();
         await this.getAllGenres();
-        await this.getMovies();
-        await this.getTvSeries();
+        await this.searchMovies();
+        await this.searchSeries();
+    },
+    async allFilms() {
+        this.reset();
+        await this.getAllGenres();
+        await this.getAllMovies();
+        await this.getAllSeries();
     },
     reset() {
         this.results = [];
         this.isMovies = false;
         this.isSeries = false;
     },
-    async getMovies() {
+    async getAllMovies() {
         try {
-            const res = await axios.get(`${baseApi}/search/movie?api_key=${apiKey}&query=${this.search || this.defaultSearch}`);
+            const moviesRes = await axios.get(`${baseApi}/discover/movie?api_key=${apiKey}`);
+            for (const movie of moviesRes.data.results) {
+                this.results.push({
+                    id: movie.id,
+                    genre_ids: movie.genre_ids,
+                    genres: this.genres.movies.filter(genre => movie.genre_ids.includes(genre.id)),
+                    title: movie.title,
+                    overview: movie.overview,
+                    language: movie.original_language,
+                    origTitle: movie.original_title,
+                    vote: movie.vote_average,
+                    image: movie.poster_path,
+                    actors: await this.getActors(movie.id, 'movie')
+                });
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+
+    },
+    async getAllSeries() {
+        try {
+            const seriesRes = await axios.get(`${baseApi}/discover/tv?api_key=${apiKey}`);
+            for (const tv of seriesRes.data.results) {
+                this.results.push({
+                    id: tv.id,
+                    genre_ids: tv.genre_ids,
+                    genres: this.genres.tv.filter(genre => tv.genre_ids.includes(genre.id)),
+                    title: tv.name,
+                    overview: tv.overview,
+                    language: tv.original_language,
+                    origTitle: tv.original_name,
+                    vote: tv.vote_average,
+                    image: tv.poster_path,
+                    actors: await this.getActors(tv.id, 'tv')
+                })
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+
+    },
+    async searchMovies() {
+        try {
+            const res = await axios.get(`${baseApi}/search/movie?api_key=${apiKey}&query=${this.search}`);
             for (const movie of res.data.results) {
                 this.results.push({
                     id: movie.id,
@@ -45,9 +94,9 @@ export const store = reactive({
             console.error(err.message);
         }
     },
-    async getTvSeries() {
+    async searchSeries() {
         try {
-            const res = await axios.get(`${baseApi}/search/tv?api_key=${apiKey}&query=${this.search || this.defaultSearch}`)
+            const res = await axios.get(`${baseApi}/search/tv?api_key=${apiKey}&query=${this.search}`)
             for (const tv of res.data.results) {
                 this.results.push({
                     id: tv.id,
@@ -113,7 +162,7 @@ export const store = reactive({
                     actors: await this.getActors(movie.id, 'movie')
                 });
             }
-            for (const tv of seriesRes.data.resultsies) {
+            for (const tv of seriesRes.data.results) {
                 this.results.push({
                     id: tv.id,
                     genre_ids: tv.genre_ids,
