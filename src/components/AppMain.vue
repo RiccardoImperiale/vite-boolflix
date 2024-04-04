@@ -38,7 +38,7 @@ export default {
                             <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
                         </div>
                         <!-- genres -->
-                        <div v-if="movie.genres" class="genres">
+                        <div v-if="movie.genres.length > 0" class="genres">
                             <h4>Genres: </h4><span v-for="genre in movie.genres">{{ genre.name }}</span>
                         </div>
                         <!-- actors -->

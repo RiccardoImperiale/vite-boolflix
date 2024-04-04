@@ -7,6 +7,8 @@ export const store = reactive({
     results: [],
     defaultSearch: 'Batman',
     genres: {},
+    invalidIds: [100535, 4625, 79588, 31749, 125909, 19579, 4303],
+
     getFilms() {
         this.results = [];
         this.getGenres()
@@ -60,13 +62,15 @@ export const store = reactive({
         }
     },
     async getActors(movieId) {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
-            let actors = res.data.cast.map(actor => actor.name);
-            const first5actors = actors.slice(0, 5);
-            return first5actors.join(", ");
-        } catch {
-            console.error(`Failed to fetch actors for movie ${movieId}`);
+        if (!this.invalidIds.includes(movieId)) {
+            try {
+                const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`);
+                let actors = res.data.cast.map(actor => actor.name);
+                const first5actors = actors.slice(0, 5);
+                return first5actors.join(", ");
+            } catch {
+                console.error(`Failed to fetch actors for movie id: ${movieId}`);
+            }
         }
     },
     async getMoviesGenres() {
