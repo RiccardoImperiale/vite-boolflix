@@ -24,51 +24,53 @@ export default {
     <main class="container">
         <!-- movies -->
         <Transition name="cards">
-            <div v-if="store.results.length > 0" class="movies"
-                :class="store.isGenreBar ? 'p-top-open' : 'p-top-close'">
-                <div v-for="movie in store.results" :key="movie.id" class="card">
-                    <div class="image">
-                        <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w300/' + movie.image"
-                            alt="movie poster">
-                        <div v-else class="no_image">{{ movie.title }}</div>
-                    </div>
-                    <!-- card info -->
-                    <div class="info">
-                        <div class="top">
-                            <div class="title">
-                                <h4>Title: </h4><span>{{ movie.title }}</span>
-                            </div>
-                            <div v-if="movie.origTitle && movie.origTitle !== movie.title" class="original_title">
-                                <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
-                            </div>
-                            <!-- genres -->
-                            <div v-if="movie.genres.length > 0" class="genres">
-                                <h4>Genres: </h4><span v-for="genre in movie.genres">{{ genre.name }}</span>
-                            </div>
-                            <!-- actors -->
-                            <div v-if="movie.actors" class="actors">
-                                <h4>Cast: </h4><span>{{ movie.actors }}</span>
-                            </div>
-                            <!-- rating -->
-                            <div class="rating">
-                                <h4>Rating: </h4>
-                                <div class="stars">
-                                    <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
-                                        class="fa-solid fa-star"></i>
-                                    <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
-                                        class="fa-regular fa-star"></i>
+            <div v-if="store.results.length > 0" :class="store.isGenreBar ? 'p-top-open' : 'p-top-close'">
+                <h2 class="section_title">{{ store.titleSection }}</h2>
+                <div class="movies">
+                    <div v-for="movie in store.results" :key="movie.id" class="card">
+                        <div class="image">
+                            <img v-if="movie.image" :src="'https://image.tmdb.org/t/p/w300/' + movie.image"
+                                alt="movie poster">
+                            <div v-else class="no_image">{{ movie.title }}</div>
+                        </div>
+                        <!-- card info -->
+                        <div class="info">
+                            <div class="top">
+                                <div class="title">
+                                    <h4>Title: </h4><span>{{ movie.title }}</span>
+                                </div>
+                                <div v-if="movie.origTitle && movie.origTitle !== movie.title" class="original_title">
+                                    <h4>Original Title: </h4><span>{{ movie.origTitle }}</span>
+                                </div>
+                                <!-- genres -->
+                                <div v-if="movie.genres.length > 0" class="genres">
+                                    <h4>Genres: </h4><span v-for="genre in movie.genres">{{ genre.name }}</span>
+                                </div>
+                                <!-- actors -->
+                                <div v-if="movie.actors" class="actors">
+                                    <h4>Cast: </h4><span>{{ movie.actors }}</span>
+                                </div>
+                                <!-- rating -->
+                                <div class="rating">
+                                    <h4>Rating: </h4>
+                                    <div class="stars">
+                                        <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
+                                            class="fa-solid fa-star"></i>
+                                        <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
+                                            class="fa-regular fa-star"></i>
+                                    </div>
+                                </div>
+                                <!-- overview -->
+                                <div v-if="movie.overview" class="overview">
+                                    <h4>Overview: </h4>
+                                    <span>{{ movie.overview }}</span>
                                 </div>
                             </div>
-                            <!-- overview -->
-                            <div v-if="movie.overview" class="overview">
-                                <h4>Overview: </h4>
-                                <span>{{ movie.overview }}</span>
+                            <div class="bottom">
+                                <img v-if="countryCodes.includes(movie.language)"
+                                    :src="'/img/flags4x3/' + movie.language + '.svg'" alt="country flag">
+                                <h4 v-else>{{ movie.language }}</h4>
                             </div>
-                        </div>
-                        <div class="bottom">
-                            <img v-if="countryCodes.includes(movie.language)"
-                                :src="'/img/flags4x3/' + movie.language + '.svg'" alt="country flag">
-                            <h4 v-else>{{ movie.language }}</h4>
                         </div>
                     </div>
                 </div>
@@ -84,6 +86,13 @@ export default {
 <style>
 main {
     color: var(--bflix-light);
+
+    .section_title {
+        color: var(--bflix-light);
+        margin-bottom: 1rem;
+        opacity: .5;
+        font-weight: 500;
+    }
 
     .movies {
         display: flex;

@@ -11,14 +11,17 @@ export const store = reactive({
     isMovies: false,
     isSeries: false,
     isGenreBar: false,
+    titleSection: 'Movies',
 
     async searchFilms() {
+        this.titleSection = 'Movies and Tv Series';
         this.reset();
         await this.getAllGenres();
         await this.searchMoviesAndSeries('movie');
         await this.searchMoviesAndSeries('tv');
     },
     async allFilms() {
+        this.titleSection = 'Movies and Tv Series';
         this.reset();
         await this.getAllGenres();
         await this.getAllMoviesAndSeries('movie');
@@ -32,7 +35,7 @@ export const store = reactive({
     async getAllMoviesAndSeries(category) {
         try {
             const res = await axios.get(`${baseApi}/discover/${category}?api_key=${apiKey}`);
-            this.handleResponse(res.data.results, category)
+            this.handleResponse(res.data.results, category);
         } catch (err) {
             console.error(err.message);
         }
@@ -74,6 +77,7 @@ export const store = reactive({
         }
     },
     async getFilmsByGenre(genreId) {
+        this.allGenres.forEach(gen => gen.id === genreId && (this.titleSection = gen.name)); // change title section
         this.results = [];
         try {
             const moviesRes = await axios.get(`${baseApi}/discover/movie?api_key=${apiKey}&with_genres=${genreId}`);

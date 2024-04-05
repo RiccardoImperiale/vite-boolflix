@@ -10,6 +10,7 @@ export default {
     },
     methods: {
         filterMovies() {
+            store.titleSection = 'Movies';
             store.isMovies = true;
             store.isSeries = false;
             store.results = [];
@@ -17,6 +18,7 @@ export default {
             store.getAllMoviesAndSeries('movie');
         },
         filterSeries() {
+            store.titleSection = 'Tv Series';
             store.isSeries = true;
             store.isMovies = false;
             store.results = [];
@@ -24,8 +26,6 @@ export default {
             store.getAllMoviesAndSeries('tv');
         },
         toggleGenresBar() {
-            // store.isMovies = false;
-            // store.isSeries = false;
             store.isGenreBar = !store.isGenreBar;
         },
     }
