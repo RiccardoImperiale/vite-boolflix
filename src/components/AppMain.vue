@@ -16,7 +16,7 @@ export default {
     },
     mounted() {
         store.allFilms();
-        store.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg');
+        store.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg', 'Godzilla x Kong: The New Empire', 'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.');
     }
 }
 </script>
@@ -24,8 +24,13 @@ export default {
 <template>
     <transition name="hero">
         <div v-if="store.isHero" class="hero_section" :class="store.isHeroGoingUp ? 'hero-go-up' : 'hero-go-down'">
-            <img class="hero_image" :src="store.heroImageSrc" alt="hero image">
+            <img class="hero_image" :src="store.heroContent.src" alt="hero image">
             <div class="hero_gradient"></div>
+            <div class="hero_filter"></div>
+            <div class="text">
+                <h1>{{ store.heroContent.title }}</h1>
+                <p>{{ store.heroContent.overview }}</p>
+            </div>
         </div>
     </transition>
     <main class="container" :class="store.isHeroGoingUp ? 'movies-go-up' : 'movies-go-down'">
@@ -41,7 +46,7 @@ export default {
                             <div v-else class="no_image">{{ movie.title }}</div>
                         </div>
                         <!-- card info -->
-                        <div @click="store.showHero(movie.heroImage)" class="info">
+                        <div @click="store.showHero(movie.heroImage, movie.title, movie.overview)" class="info">
                             <div class="top">
                                 <div class="title">
                                     <h4>Title: </h4><span>{{ movie.title }}</span>
@@ -111,9 +116,29 @@ export default {
         width: 100%;
         bottom: 0;
     }
+
+    .hero_filter {
+        position: absolute;
+        inset: 0;
+        /* background-color: var(--bflix-darker); */
+        background: linear-gradient(90deg, var(--bflix-darker) 0%, transparent 100%);
+        opacity: .8;
+        /* mix-blend-mode: multiply; */
+    }
+
+    .text {
+        padding-top: 10rem;
+        padding-left: 6rem;
+        width: 500px;
+        position: absolute;
+        top: 0;
+        color: var(--bflix-light);
+
+        & p {
+            font-size: .85rem;
+        }
+    }
 }
-
-
 
 main {
     color: var(--bflix-light);
@@ -125,6 +150,7 @@ main {
         margin-bottom: 1rem;
         opacity: .5;
         font-weight: 500;
+        /* mix-blend-mode: difference; */
     }
 
     .movies {

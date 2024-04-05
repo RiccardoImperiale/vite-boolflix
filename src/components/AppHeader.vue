@@ -1,5 +1,7 @@
 <script>
 import { store } from '../store.js';
+const defaultMovieOverview = 'Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.'
+const defaultSerieOverview = 'Seth Meyers, who is "Saturday Night Live’s" longest serving anchor on the show’s wildly popular "Weekend Update," takes over as host of NBC’s "Late Night" — home to A-list celebrity guests, memorable comedy and the best in musical talent. As the Emmy Award-winning head writer for "SNL," Meyers has established a reputation for sharp wit and perfectly timed comedy, and has gained fame for his spot-on jokes and satire. Meyers takes his departure from "SNL" to his new post at "Late Night," as Jimmy Fallon moves to "The Tonight Show".'
 
 export default {
     name: 'AppHeader',
@@ -17,7 +19,7 @@ export default {
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries('movie');
-            store.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg');
+            store.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg', 'Godzilla x Kong: The New Empire', defaultMovieOverview);
         },
         filterSeries() {
             store.isGenreBar = false;
@@ -27,7 +29,7 @@ export default {
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries('tv');
-            store.showHero('/dfX2UaHVE5c7kLBFbgmEZJuy4Ev.jpg');
+            store.showHero('/dfX2UaHVE5c7kLBFbgmEZJuy4Ev.jpg', 'Late Night with Seth Meyers', defaultSerieOverview)
         },
         toggleGenresBar() {
             store.isGenreBar = !store.isGenreBar;

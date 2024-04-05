@@ -13,8 +13,8 @@ export const store = reactive({
     isGenreBar: false,
     titleSection: 'Movies',
     isHero: true,
-    heroImageSrc: '',
     isHeroGoingUp: false,
+    heroContent: [],
 
     async searchFilms() {
         this.titleSection = 'Movies and Tv Series';
@@ -112,10 +112,16 @@ export const store = reactive({
             });
         }
     },
-    showHero(heroImage) {
+    showHero(heroImage, title, overview) {
+        this.heroContent = {
+            title: title,
+            src: 'https://image.tmdb.org/t/p/original/' + heroImage,
+            overview: overview
+        }
+        console.log(this.heroText);
+
         this.isHero = true;
         this.isHeroGoingUp = false;
-        this.heroImageSrc = 'https://image.tmdb.org/t/p/original/' + heroImage;
     }
 })
 
