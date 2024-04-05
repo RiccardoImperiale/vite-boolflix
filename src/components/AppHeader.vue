@@ -1,6 +1,7 @@
 <script>
 import { store } from '../store.js';
 import { defaultMovieOmj, defaultSeriesOmj } from '../data.js';
+import Rellax from 'rellax';
 
 export default {
     name: 'AppHeader',
@@ -30,12 +31,18 @@ export default {
         toggleGenresBar() {
             store.isGenreBar = !store.isGenreBar;
         },
+    },
+    mounted() {
+        this.rellax = new Rellax('.rellax-item');
+    },
+    destroyed() {
+        this.rellax && this.rellax.destroy();
     }
 }
 </script>
 
 <template>
-    <header>
+    <header class="rellax-item" data-rellax-speed="-10">
         <nav class="container">
             <div class="left">
                 <img @click="store.allFilms" src="/img/boolflix-logo.png" alt="boolflix logo">

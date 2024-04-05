@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store.js';
+import Rellax from 'rellax';
 
 export default {
     name: 'AppHero',
@@ -7,17 +8,24 @@ export default {
         return {
             store,
         }
+    },
+    mounted() {
+        this.rellax = new Rellax('.rellax-item');
+    },
+    destroyed() {
+        this.rellax && this.rellax.destroy();
     }
 }
 </script>
 
 <template>
     <transition name="hero">
-        <div v-if="store.isHero" class="hero_section" :class="store.isHeroGoingUp ? 'hero-go-up' : 'hero-go-down'">
+        <div v-if="store.isHero" class="hero_section rellax-item" data-rellax-speed="-8"
+            :class="store.isHeroGoingUp ? 'hero-go-up' : 'hero-go-down'">
             <img class="hero_image" :src="store.heroContent.src" alt="hero image">
             <div class="hero_gradient"></div>
             <div class="hero_filter"></div>
-            <div class="text">
+            <div class="text rellax-item" data-rellax-speed="1">
                 <h1>{{ store.heroContent.title }}</h1>
                 <p>{{ store.heroContent.overview }}</p>
             </div>
