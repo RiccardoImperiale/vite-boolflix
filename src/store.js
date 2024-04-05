@@ -114,13 +114,13 @@ export const store = reactive({
     },
     showHero(heroImage, title, overview) {
         this.heroContent = {
-            title: title,
             src: 'https://image.tmdb.org/t/p/original/' + heroImage,
+            title: title,
             overview: overview
         }
-        console.log(this.heroText);
 
         this.isHero = true;
+        this.isGenreBar = false;
         this.isHeroGoingUp = false;
     }
 })
