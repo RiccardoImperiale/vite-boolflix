@@ -101,7 +101,7 @@ export default {
     height: 65px;
     overflow: hidden;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     width: 100%;
     margin: auto;
 
