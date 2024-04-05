@@ -14,14 +14,14 @@ export default {
             store.isSeries = false;
             store.results = [];
             store.getAllGenres();
-            store.getAllMovies();
+            store.getAllMoviesAndSeries('movie');
         },
         filterSeries() {
             store.isSeries = true;
             store.isMovies = false;
             store.results = [];
             store.getAllGenres();
-            store.getAllSeries();
+            store.getAllMoviesAndSeries('tv');
         },
         toggleGenresBar() {
             // store.isMovies = false;
