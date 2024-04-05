@@ -36,6 +36,7 @@ export const store = reactive({
         this.isSeries = false;
     },
     async getAllMoviesAndSeries(category) {
+        // get all movies and tv series
         try {
             const res = await axios.get(`${baseApi}/discover/${category}?api_key=${apiKey}`);
             this.handleResponse(res.data.results, category);
@@ -44,6 +45,7 @@ export const store = reactive({
         }
     },
     async searchMoviesAndSeries(category) {
+        // api call from search input
         try {
             const res = await axios.get(`${baseApi}/search/${category}?api_key=${apiKey}&query=${this.search}`);
             this.handleResponse(res.data.results, category);
@@ -53,6 +55,7 @@ export const store = reactive({
     },
     async getActors(movieId, category) {
         try {
+            // get first 5 actors
             const res = await axios.get(`${baseApi}/${category}/${movieId}/credits?api_key=${apiKey}`);
             let actors = res.data.cast.map(actor => actor.name);
             const first5actors = actors.slice(0, 5);
@@ -65,12 +68,14 @@ export const store = reactive({
         try {
             const moviesRes = await axios.get(`${baseApi}/genre/movie/list?api_key=${apiKey}`);
             const seriesRes = await axios.get(`${baseApi}/genre/tv/list?api_key=${apiKey}`);
+            // get genres divided into tv series or movie
             this.genres = {
                 tv: seriesRes.data.genres,
                 movie: moviesRes.data.genres
             };
+            // get all genres in one array
             const allGenres = [...moviesRes.data.genres, ...seriesRes.data.genres];
-            // Remove duplicate genres by using Set
+            // remove duplicate genres by using Set
             this.allGenres = Array.from(new Set(allGenres.map(genre => genre.id))).map(id => {
                 return allGenres.find(genre => genre.id === id);
             });
@@ -83,9 +88,10 @@ export const store = reactive({
         this.isMovies = false;
         this.isSeries = false;
         this.isHeroGoingUp = true;
-        this.allGenres.forEach(gen => gen.id === genreId && (this.titleSection = gen.name)); // change title section
+        // change section title
+        this.allGenres.forEach(gen => gen.id === genreId && (this.titleSection = gen.name));
         this.results = [];
-
+        // get movie or tv series by genre
         try {
             const moviesRes = await axios.get(`${baseApi}/discover/movie?api_key=${apiKey}&with_genres=${genreId}`);
             const seriesRes = await axios.get(`${baseApi}/discover/tv?api_key=${apiKey}&with_genres=${genreId}`);
@@ -113,15 +119,15 @@ export const store = reactive({
         }
     },
     showHero(heroImage, title, overview) {
+        this.isHero = true; // show hero section
+        this.isGenreBar = false;
+        this.isHeroGoingUp = false;
+        // get all the content needed for the hero section
         this.heroContent = {
             src: 'https://image.tmdb.org/t/p/original/' + heroImage,
             title: title,
             overview: overview
         }
-
-        this.isHero = true;
-        this.isGenreBar = false;
-        this.isHeroGoingUp = false;
     }
 })
 
