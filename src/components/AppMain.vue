@@ -181,12 +181,12 @@ main {
                     }
 
                     .overview {
-                        height: 100px;
-                        overflow-y: auto;
-                        padding-right: .25rem;
+                        max-height: 100px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
                         text-overflow: ellipsis;
-                        scrollbar-color: var(--bflix-warning) transparent;
-                        scrollbar-width: thin;
                     }
                 }
 
