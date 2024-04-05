@@ -77,6 +77,8 @@ export const store = reactive({
         }
     },
     async getFilmsByGenre(genreId) {
+        this.isMovies = false;
+        this.isSeries = false;
         this.allGenres.forEach(gen => gen.id === genreId && (this.titleSection = gen.name)); // change title section
         this.results = [];
         try {
@@ -100,7 +102,8 @@ export const store = reactive({
                 origTitle: item.original_title || item.original_name,
                 vote: item.vote_average,
                 image: item.poster_path,
-                actors: await this.getActors(item.id, category)
+                actors: await this.getActors(item.id, category),
+                heroImage: item.backdrop_path
             });
         }
     }

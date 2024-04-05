@@ -36,11 +36,13 @@ export default {
     <header>
         <nav class="container">
             <div class="left">
-                <img src="/img/boolflix-logo.png" alt="boolflix logo">
+                <img @click="store.allFilms" src="/img/boolflix-logo.png" alt="boolflix logo">
                 <div class="links">
                     <span @click="filterMovies" :class="store.isMovies && 'is-active'">Movies</span>
                     <span @click="filterSeries" :class="store.isSeries && 'is-active'">TV Series</span>
-                    <span @click="toggleGenresBar" :class="store.isGenreBar && 'is-active'">Genres</span>
+                    <span @click="toggleGenresBar" :class="store.isGenreBar && 'is-active'">Genres <i
+                            class="fa-solid fa-chevron-left"
+                            :class="store.isGenreBar ? 'arrow-down' : 'arrow-left'"></i></span>
                 </div>
             </div>
             <div class="right">
@@ -66,6 +68,24 @@ export default {
 </template>
 
 <style>
+.fa-chevron-left {
+    position: relative;
+    font-size: .85rem;
+    vertical-align: middle;
+    margin-left: .3rem;
+}
+
+.arrow-left {
+    rotate: -90deg;
+    transition: rotate .5s ease;
+    bottom: .1rem;
+}
+
+.arrow-down {
+    rotate: 0deg;
+    transition: rotate .5s ease;
+}
+
 .bar_container {
     height: 65px;
     overflow: hidden;
@@ -124,6 +144,7 @@ header {
             & img {
                 width: 140px;
                 margin-right: 3rem;
+                cursor: pointer;
             }
 
             .links {

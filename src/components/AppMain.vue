@@ -6,6 +6,7 @@ export default {
     data() {
         return {
             store,
+            heroImageSrc: '',
             countryCodes: ['ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb', 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bl', 'bm', 'bn', 'bo', 'bq', 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cp', 'cr', 'cu', 'cv', 'cw', 'cx', 'cy', 'cz', 'de', 'dg', 'dj', 'dk', 'dm', 'do', 'dz', 'ec', 'ee', 'eg', 'eh', 'el', 'en', 'er', 'es', 'et', 'eu', 'fi', 'fj', 'fk', 'fm', 'fo', 'fr', 'ga', 'gb', 'gd', 'ge', 'gf', 'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp', 'gq', 'gr', 'gs', 'gt', 'gu', 'gw', 'gy', 'hi', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu', 'ic', 'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it', 'ja', 'je', 'jm', 'jo', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn', 'ko', 'kp', 'kr', 'kw', 'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk', 'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md', 'me', 'mf', 'mg', 'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms', 'mt', 'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne', 'nf', 'ng', 'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om', 'pa', 'pc', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr', 'ps', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'rs', 'ru', 'rw', 'sa', 'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl', 'sm', 'sn', 'so', 'sr', 'ss', 'st', 'sx', 'sy', 'sz', 'tc', 'td', 'tf', 'tg', 'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tr', 'tt', 'tv', 'tw', 'tz', 'ua', 'ug', 'uk', 'um', 'un', 'us', 'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf', 'ws', 'xk', 'xx', 'ye', 'yt', 'za', 'zh', 'zm', 'zw'],
         }
     },
@@ -13,14 +14,23 @@ export default {
         getRatingStars(rating) {
             return Math.ceil(rating /= 2);
         },
+        showHero(heroImage) {
+            console.log('hero', heroImage);
+            this.heroImageSrc = 'https://image.tmdb.org/t/p/original/' + heroImage
+        }
     },
     mounted() {
         this.store.allFilms();
+        this.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg')
     }
 }
 </script>
 
 <template>
+    <div class="hero_section">
+        <img class="hero_image" :src="heroImageSrc" alt="hero image">
+        <div class="hero_gradient"></div>
+    </div>
     <main class="container">
         <!-- movies -->
         <Transition name="cards">
@@ -34,7 +44,7 @@ export default {
                             <div v-else class="no_image">{{ movie.title }}</div>
                         </div>
                         <!-- card info -->
-                        <div class="info">
+                        <div @click="showHero(movie.heroImage)" class="info">
                             <div class="top">
                                 <div class="title">
                                     <h4>Title: </h4><span>{{ movie.title }}</span>
@@ -84,6 +94,29 @@ export default {
 </template>
 
 <style>
+.hero_section {
+    background-color: aqua;
+    height: 720px;
+    overflow: hidden;
+    margin-bottom: -8rem;
+    position: relative;
+
+    .hero_image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .hero_gradient {
+        position: absolute;
+        background: linear-gradient(transparent, var(--bflix-darker));
+        height: 10rem;
+        width: 100%;
+        bottom: 0;
+        mix-blend-mode: multiply;
+    }
+}
+
 main {
     color: var(--bflix-light);
 
@@ -93,6 +126,8 @@ main {
         opacity: .5;
         font-weight: 500;
     }
+
+
 
     .movies {
         display: flex;
@@ -133,6 +168,7 @@ main {
                 flex-direction: column;
                 justify-content: space-between;
                 font-size: .85rem;
+                cursor: pointer;
 
                 .card:hover & {
                     opacity: .85;
