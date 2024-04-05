@@ -10,20 +10,24 @@ export default {
     },
     methods: {
         filterMovies() {
+            store.isGenreBar = false;
             store.titleSection = 'Movies';
             store.isMovies = true;
             store.isSeries = false;
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries('movie');
+            store.showHero('/sR0SpCrXamlIkYMdfz83sFn5JS6.jpg');
         },
         filterSeries() {
+            store.isGenreBar = false;
             store.titleSection = 'Tv Series';
             store.isSeries = true;
             store.isMovies = false;
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries('tv');
+            store.showHero('/dfX2UaHVE5c7kLBFbgmEZJuy4Ev.jpg');
         },
         toggleGenresBar() {
             store.isGenreBar = !store.isGenreBar;

@@ -35,15 +35,26 @@ body {
   color: var(--bflix-secondary);
 }
 
-.p-top-open {
-  transition: padding-top .5s ease;
-  padding-top: 5rem;
+.hero-go-up {
+  bottom: 725px;
+  transition: bottom 1s ease;
 }
 
-.p-top-close {
-  transition: padding-top .5s ease;
-  padding-top: 1rem;
+.hero-go-down {
+  bottom: 0;
+  transition: bottom 1s ease;
 }
+
+.movies-go-up {
+  bottom: 500px;
+  transition: bottom 1s ease;
+}
+
+.movies-go-down {
+  bottom: 0;
+  transition: bottom 1s ease;
+}
+
 
 /* transitions --------------------------------> */
 
@@ -78,4 +89,15 @@ body {
 .inputIcon-leave-to {
   opacity: 0;
   scale: 0.2;
+}
+
+
+.hero-enter-active,
+.hero-leave-active {
+  transition: opacity 1s ease;
+}
+
+.hero-enter-from,
+.hero-leave-to {
+  opacity: 0;
 }

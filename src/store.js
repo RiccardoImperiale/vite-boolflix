@@ -12,6 +12,9 @@ export const store = reactive({
     isSeries: false,
     isGenreBar: false,
     titleSection: 'Movies',
+    isHero: true,
+    heroImageSrc: '',
+    isHeroGoingUp: false,
 
     async searchFilms() {
         this.titleSection = 'Movies and Tv Series';
@@ -79,8 +82,10 @@ export const store = reactive({
     async getFilmsByGenre(genreId) {
         this.isMovies = false;
         this.isSeries = false;
+        this.isHeroGoingUp = true;
         this.allGenres.forEach(gen => gen.id === genreId && (this.titleSection = gen.name)); // change title section
         this.results = [];
+
         try {
             const moviesRes = await axios.get(`${baseApi}/discover/movie?api_key=${apiKey}&with_genres=${genreId}`);
             const seriesRes = await axios.get(`${baseApi}/discover/tv?api_key=${apiKey}&with_genres=${genreId}`);
@@ -106,6 +111,11 @@ export const store = reactive({
                 heroImage: item.backdrop_path
             });
         }
+    },
+    showHero(heroImage) {
+        this.isHero = true;
+        this.isHeroGoingUp = false;
+        this.heroImageSrc = 'https://image.tmdb.org/t/p/original/' + heroImage;
     }
 })
 
