@@ -1,0 +1,72 @@
+<script>
+import { store } from '../store.js';
+
+export default {
+    name: 'AppHero',
+    data() {
+        return {
+            store,
+        }
+    }
+}
+</script>
+
+<template>
+    <transition name="hero">
+        <div v-if="store.isHero" class="hero_section" :class="store.isHeroGoingUp ? 'hero-go-up' : 'hero-go-down'">
+            <img class="hero_image" :src="store.heroContent.src" alt="hero image">
+            <div class="hero_gradient"></div>
+            <div class="hero_filter"></div>
+            <div class="text">
+                <h1>{{ store.heroContent.title }}</h1>
+                <p>{{ store.heroContent.overview }}</p>
+            </div>
+        </div>
+    </transition>
+</template>
+
+<style>
+.hero_section {
+    height: 720px;
+    overflow: hidden;
+    margin-bottom: -8rem;
+    position: relative;
+    z-index: -1;
+
+    .hero_image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .hero_gradient {
+        position: absolute;
+        background: linear-gradient(transparent, var(--bflix-darker));
+        height: 8rem;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .hero_filter {
+        position: absolute;
+        inset: 0;
+        /* background-color: var(--bflix-darker); */
+        background: linear-gradient(90deg, var(--bflix-darker) 0%, transparent 100%);
+        opacity: .8;
+        /* mix-blend-mode: multiply; */
+    }
+
+    .text {
+        padding-top: 10rem;
+        padding-left: 6rem;
+        width: 500px;
+        position: absolute;
+        top: 0;
+        color: var(--bflix-light);
+
+        & p {
+            font-size: .85rem;
+        }
+    }
+}
+</style>

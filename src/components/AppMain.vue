@@ -1,9 +1,13 @@
 <script>
 import { store } from '../store.js';
 import { defaultMovieOmj, countryCodes } from '../data.js';
+import AppHero from './AppHero.vue';
 
 export default {
     name: 'AppMain',
+    components: {
+        AppHero
+    },
     data() {
         return {
             store,
@@ -24,17 +28,7 @@ export default {
 </script>
 
 <template>
-    <transition name="hero">
-        <div v-if="store.isHero" class="hero_section" :class="store.isHeroGoingUp ? 'hero-go-up' : 'hero-go-down'">
-            <img class="hero_image" :src="store.heroContent.src" alt="hero image">
-            <div class="hero_gradient"></div>
-            <div class="hero_filter"></div>
-            <div class="text">
-                <h1>{{ store.heroContent.title }}</h1>
-                <p>{{ store.heroContent.overview }}</p>
-            </div>
-        </div>
-    </transition>
+    <AppHero />
     <main class="container" :class="store.isHeroGoingUp ? 'movies-go-up' : 'movies-go-down'">
         <!-- movies -->
         <Transition name="cards">

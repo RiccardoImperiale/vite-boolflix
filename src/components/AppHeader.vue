@@ -2,7 +2,6 @@
 import { store } from '../store.js';
 import { defaultMovieOmj, defaultSeriesOmj } from '../data.js';
 
-
 export default {
     name: 'AppHeader',
     data() {
@@ -16,8 +15,13 @@ export default {
         filterCategory(title, category, defaultObj) {
             store.isGenreBar = false;
             store.titleSection = title;
-            store.isMovies = !store.isMovies;
-            store.isSeries = !store.isSeries;
+            if (category === 'movie') {
+                store.isMovies = true
+                store.isSeries = false;
+            } else {
+                store.isMovies = false;
+                store.isSeries = true;
+            }
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries(category);
