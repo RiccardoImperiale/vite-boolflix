@@ -23,7 +23,6 @@ export default {
     mounted() {
         store.allFilms();
         store.showHero(defaultMovieOmj.src, defaultMovieOmj.title, defaultMovieOmj.overview, defaultMovieOmj.rating);
-        console.log(store.heroContent);
     }
 }
 </script>

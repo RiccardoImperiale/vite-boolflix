@@ -129,7 +129,6 @@ export const store = reactive({
             overview: overview,
             rating: rating
         }
-        console.log(this.heroContent);
     }
 })
 

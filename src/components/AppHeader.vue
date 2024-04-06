@@ -57,10 +57,12 @@ export default {
                 </div>
             </div>
             <div class="right">
-                <input v-model="store.search" type="text" placeholder="Search Movies...">
-                <transition name="inputIcon">
-                    <i v-if="store.search !== ''" @click="store.searchFilms" class="fa-solid fa-magnifying-glass"></i>
-                </transition>
+                <input @keyup.enter="store.searchFilms" v-model="store.search" type="text"
+                    placeholder="Search Movies...">
+                <!-- <transition name="inputIcon"> -->
+                <i @click="store.searchFilms" class="fa-solid fa-magnifying-glass"
+                    :style="{ 'pointer-events': store.search !== '' ? 'auto' : 'none' }"></i>
+                <!-- </transition> -->
             </div>
         </nav>
     </header>

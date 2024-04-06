@@ -67,10 +67,8 @@ export default {
     .hero_filter {
         position: absolute;
         inset: 0;
-        /* background-color: var(--bflix-darker); */
         background: linear-gradient(90deg, var(--bflix-darker) 0%, transparent 100%);
         opacity: .8;
-        /* mix-blend-mode: multiply; */
     }
 
     .text {
