@@ -22,13 +22,14 @@ export default {
     },
     mounted() {
         store.allFilms();
-        store.showHero(defaultMovieOmj.src, defaultMovieOmj.title, defaultMovieOmj.overview);
+        store.showHero(defaultMovieOmj.src, defaultMovieOmj.title, defaultMovieOmj.overview, defaultMovieOmj.rating);
+        console.log(store.heroContent);
     }
 }
 </script>
 
 <template>
-    <AppHero />
+    <AppHero :heroContent="store.heroContent" />
     <main class="container" :class="store.isHeroGoingUp ? 'movies-go-up' : 'movies-go-down'">
         <!-- movies -->
         <Transition name="cards">
@@ -42,7 +43,8 @@ export default {
                             <div v-else class="no_image">{{ movie.title }}</div>
                         </div>
                         <!-- card info -->
-                        <div @click="store.showHero(movie.heroImage, movie.title, movie.overview)" class="info">
+                        <div @click="store.showHero(movie.heroImage, movie.title, movie.overview, getRatingStars(movie.vote))"
+                            class="info">
                             <div class="top">
                                 <div class="title">
                                     <h4>Title: </h4><span>{{ movie.title }}</span>

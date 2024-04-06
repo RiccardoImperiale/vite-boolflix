@@ -27,6 +27,15 @@ export default {
             <div class="hero_filter"></div>
             <div class="text rellax-item" data-rellax-speed="1">
                 <h1>{{ store.heroContent.title }}</h1>
+                <!-- rating -->
+                <div class="rating">
+                    <div class="circle">
+
+                        <img width="46" :src="'/img/rating/' + store.heroContent.rating + '.png'"
+                            alt="rating progress circle">
+                        <div class="vote">{{ store.heroContent.rating }}<span>/5</span></div>
+                    </div>
+                </div>
                 <p>{{ store.heroContent.overview }}</p>
             </div>
         </div>
@@ -65,12 +74,40 @@ export default {
     }
 
     .text {
-        padding-top: 10rem;
+        padding-top: 6rem;
         padding-left: 6rem;
         width: 500px;
         position: absolute;
         top: 0;
         color: var(--bflix-light);
+
+        & h1 {
+            width: 310px;
+            margin-bottom: .2rem;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: start;
+            margin-bottom: .5rem;
+
+
+            .circle {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .vote {
+                    position: absolute;
+
+                    >span {
+                        color: gray;
+                        font-size: .7rem;
+                    }
+                }
+            }
+        }
 
         & p {
             font-size: .85rem;

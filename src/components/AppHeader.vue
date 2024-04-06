@@ -26,7 +26,7 @@ export default {
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries(category);
-            store.showHero(defaultObj.src, defaultObj.title, defaultObj.overview);
+            store.showHero(defaultObj.src, defaultObj.title, defaultObj.overview, defaultObj.rating);
         },
         toggleGenresBar() {
             store.isGenreBar = !store.isGenreBar;
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-    <header class="rellax-item" data-rellax-speed="-10">
+    <header class="rellax-item" data-rellax-speed="-5">
         <nav class="container">
             <div class="left">
                 <img @click="store.allFilms" src="/img/boolflix-logo.png" alt="boolflix logo">
@@ -123,6 +123,7 @@ export default {
 
             .genre {
                 background-color: var(--bflix-dark);
+
                 padding: .2rem .6rem;
                 border-radius: .25rem;
                 text-wrap: nowrap;
@@ -130,7 +131,7 @@ export default {
                 color: var(--bflix-light);
 
                 &:hover {
-                    background-color: rgb(100, 0, 0);
+                    background-color: rgb(0, 0, 0);
                 }
             }
         }

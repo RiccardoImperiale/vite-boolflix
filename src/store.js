@@ -118,7 +118,7 @@ export const store = reactive({
             });
         }
     },
-    showHero(heroImage, title, overview) {
+    showHero(heroImage, title, overview, rating) {
         this.isHero = true; // show hero section
         this.isGenreBar = false;
         this.isHeroGoingUp = false;
@@ -126,8 +126,10 @@ export const store = reactive({
         this.heroContent = {
             src: 'https://image.tmdb.org/t/p/original/' + heroImage,
             title: title,
-            overview: overview
+            overview: overview,
+            rating: rating
         }
+        console.log(this.heroContent);
     }
 })
 
