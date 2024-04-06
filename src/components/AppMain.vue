@@ -15,20 +15,15 @@ export default {
             defaultMovieOmj,
         }
     },
-    methods: {
-        getRatingStars(rating) {
-            return Math.ceil(rating /= 2);
-        }
-    },
     mounted() {
         store.allFilms();
-        store.showHero(defaultMovieOmj.src, defaultMovieOmj.title, defaultMovieOmj.overview, defaultMovieOmj.rating);
+        store.showHero(defaultMovieOmj);
     }
 }
 </script>
 
 <template>
-    <AppHero :heroContent="store.heroContent" />
+    <AppHero />
     <main class="container" :class="store.isHeroGoingUp ? 'movies-go-up' : 'movies-go-down'">
         <!-- movies -->
         <Transition name="cards">
@@ -42,8 +37,8 @@ export default {
                             <div v-else class="no_image">{{ movie.title }}</div>
                         </div>
                         <!-- card info -->
-                        <div @click="store.showHero(movie.heroImage, movie.title, movie.overview, getRatingStars(movie.vote))"
-                            class="info">
+                        <!-- <div @click="store.showHero(movie.heroImage, movie.title, movie.overview, getRatingStars(movie.vote), movie.genres)" -->
+                        <div @click="store.showHero(movie)" class="info">
                             <div class="top">
                                 <div class="title">
                                     <h4>Title: </h4><span>{{ movie.title }}</span>
@@ -63,9 +58,9 @@ export default {
                                 <div class="rating">
                                     <h4>Rating: </h4>
                                     <div class="stars">
-                                        <i v-for="fullStar in getRatingStars(movie.vote)" :key="fullStar"
+                                        <i v-for="fullStar in store.getRatingStars(movie.vote)" :key="fullStar"
                                             class="fa-solid fa-star"></i>
-                                        <i v-for="emptyStar in 5 - getRatingStars(movie.vote)" :key="emptyStar"
+                                        <i v-for="emptyStar in 5 - store.getRatingStars(movie.vote)" :key="emptyStar"
                                             class="fa-regular fa-star"></i>
                                     </div>
                                 </div>

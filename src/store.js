@@ -118,17 +118,22 @@ export const store = reactive({
             });
         }
     },
-    showHero(heroImage, title, overview, rating) {
+    showHero(movie) {
         this.isHero = true; // show hero section
         this.isGenreBar = false;
         this.isHeroGoingUp = false;
         // get all the content needed for the hero section
+        console.log(movie);
         this.heroContent = {
-            src: 'https://image.tmdb.org/t/p/original/' + heroImage,
-            title: title,
-            overview: overview,
-            rating: rating
+            src: 'https://image.tmdb.org/t/p/original/' + movie.heroImage,
+            title: movie.title,
+            overview: movie.overview,
+            rating: this.getRatingStars(movie.vote),
+            genres: movie.genres
         }
+    },
+    getRatingStars(rating) {
+        return Math.ceil(rating /= 2);
     }
 })
 

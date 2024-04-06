@@ -26,7 +26,7 @@ export default {
             store.results = [];
             store.getAllGenres();
             store.getAllMoviesAndSeries(category);
-            store.showHero(defaultObj.src, defaultObj.title, defaultObj.overview, defaultObj.rating);
+            store.showHero(defaultObj);
         },
         toggleGenresBar() {
             store.isGenreBar = !store.isGenreBar;
