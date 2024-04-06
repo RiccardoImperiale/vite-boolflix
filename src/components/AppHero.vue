@@ -57,6 +57,7 @@ export default {
         height: 100%;
         width: 100%;
         object-fit: cover;
+        object-position: top;
     }
 
     .hero_gradient {
@@ -75,8 +76,8 @@ export default {
     }
 
     .info {
-        padding-top: 6rem;
-        padding-left: 6rem;
+        padding-top: 6.5rem;
+        padding-left: 6%;
         width: 500px;
         position: absolute;
         top: 0;
@@ -129,15 +130,24 @@ export default {
                         content: ', ';
                     }
                 }
-
-
-
             }
         }
 
         & p {
             font-size: .85rem;
         }
+    }
+}
+
+@media screen and (min-width: 2132px) {
+    .hero_section .info {
+        padding-left: 10%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hero_section .info p {
+        width: 100%;
     }
 }
 </style>
