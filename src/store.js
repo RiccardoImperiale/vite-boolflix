@@ -123,7 +123,6 @@ export const store = reactive({
         this.isGenreBar = false;
         this.isHeroGoingUp = false;
         // get all the content needed for the hero section
-        console.log(movie);
         this.heroContent = {
             src: 'https://image.tmdb.org/t/p/original/' + movie.heroImage,
             title: movie.title,

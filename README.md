@@ -1,3 +1,6 @@
+
+![alt text](./public/screen.png)
+
 # BoolFlix
 
 ## Milestone 0:
